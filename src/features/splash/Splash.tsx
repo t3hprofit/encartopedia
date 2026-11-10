@@ -34,27 +34,33 @@ function GoldenFace() {
         const y = 300 - 170 * t + 40 * Math.sin(t * Math.PI * 1.4)
         return <rect key={i} x={x - 7} y={y - 10} width="14" height="20" fill="#2b2410" opacity="0.65" rx="1.5" />
       })}
-      {/* classical golden profile */}
+      {/* classical golden profile, facing left */}
       <path
-        d="M215 70
-           C 250 55, 290 70, 300 110
-           C 306 134, 300 150, 290 162
-           C 296 170, 296 178, 288 182
-           C 292 190, 288 198, 278 198
-           C 280 212, 268 222, 250 218
-           C 240 240, 210 244, 196 228
-           C 170 236, 150 218, 154 196
-           C 136 184, 136 156, 152 142
-           C 150 100, 178 74, 215 70 Z"
+        d="M232 52
+           C 196 54, 172 80, 168 112
+           C 166 124, 161 132, 155 141
+           L 143 162
+           C 141 167, 143 171, 150 171
+           C 147 177, 148 181, 154 182
+           C 150 188, 151 193, 159 194
+           C 156 202, 161 210, 173 211
+           C 178 226, 192 236, 212 236
+           C 238 238, 262 228, 272 206
+           C 284 180, 288 148, 284 116
+           C 279 78, 262 51, 232 52 Z"
         fill="url(#gold)"
         stroke="#8a6d1d"
-        strokeWidth="2"
+        strokeWidth="2.5"
       />
-      <path d="M262 128 a7 4 0 1 0 14 0 a7 4 0 1 0 -14 0" fill="#5c4812" />
-      <path d="M284 150 q10 6 2 14" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
-      <path d="M266 180 q10 2 16 -2" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
-      {/* laurel hint */}
-      <path d="M190 84 q-16 10 -18 30 M206 76 q-20 8 -26 26" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
+      {/* eye, brow, nostril, lips, ear */}
+      <path d="M168 118 q10 -8 20 -2" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
+      <path d="M172 128 a6 3.5 -8 1 0 14 2 a6 3.5 -8 1 0 -14 -2" fill="#5c4812" />
+      <path d="M152 166 q4 2 7 1" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M156 181 q7 2 12 -1 M158 191 q6 2 11 -1" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M236 142 a10 14 0 1 0 2 26" fill="none" stroke="#8a6d1d" strokeWidth="3" />
+      {/* laurel wreath */}
+      <path d="M190 60 q-22 10 -28 34 M212 54 q-28 8 -38 34" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
+      <path d="M186 64 q-4 8 -12 10 M198 58 q-4 8 -12 10 M176 76 q-2 8 -10 11" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   )
 }

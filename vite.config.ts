@@ -30,6 +30,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        navigateFallback: 'index.html',
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/(en\.wikipedia\.org|en\.wiktionary\.org|www\.wikidata\.org|api\.wikimedia\.org|commons\.wikimedia\.org)\/.*/,

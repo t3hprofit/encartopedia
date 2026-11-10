@@ -6,6 +6,7 @@ import { Dialog } from '../ui/Dialog'
 import { AREAS } from '../theme/areas'
 import { AtlasIcon, GalleryIcon, MindMazeIcon, TimelineIcon } from './FeatureIcons'
 import { Pinpointer } from '../features/pinpointer/Pinpointer'
+import { ToolsHost } from '../features/tools/ToolsHost'
 import { playClick } from '../sfx/audio'
 import './shell.css'
 
@@ -97,7 +98,7 @@ export function Shell() {
           Go Back
         </button>
         <span className="spacer" />
-        <PullDown label="Features" kind="menu" menuClass="black">
+        <PullDown label="Features" kind="menu" menuClass="black right">
           {(close) => (
             <>
               <button className="e-menu-item" onClick={() => go('/w/atlas', close)}>
@@ -115,7 +116,7 @@ export function Shell() {
             </>
           )}
         </PullDown>
-        <PullDown label="Tools" kind="menu">
+        <PullDown label="Tools" kind="menu" menuClass="right">
           {(close) => (
             <>
               {['Browse Panel', 'Dictionary Thesaurus', 'Notemark', 'Back List', 'Word Processor'].map((t) => (
@@ -141,6 +142,7 @@ export function Shell() {
           <Outlet context={{ openPinpointer: () => setPinpointerOpen(true) } satisfies ShellContext} />
         </div>
       </div>
+      <ToolsHost />
       {pinpointerOpen && <Pinpointer onClose={() => setPinpointerOpen(false)} />}
       {notYet && (
         <Dialog title={notYet} onClose={() => setNotYet(null)}>

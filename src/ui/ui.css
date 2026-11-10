@@ -109,6 +109,10 @@
   background: var(--e-black);
   border-color: var(--e-gold-dark);
 }
+.e-menu.right {
+  left: auto;
+  right: 0;
+}
 .e-menu-item {
   display: flex;
   align-items: center;
