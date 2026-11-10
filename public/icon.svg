@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#000000"/>
+  <circle cx="32" cy="28" r="17" fill="#2a5db0"/>
+  <path d="M19 23 Q28 16 36 22 T49 30 Q41 40 30 37 T18 31 Z" fill="#4e7d4e"/>
+  <circle cx="32" cy="28" r="17" fill="none" stroke="#d4af37" stroke-width="2"/>
+  <rect x="12" y="48" width="40" height="4.5" fill="#8f1a1a"/>
+  <rect x="16" y="53" width="32" height="4.5" fill="#3f7f7f"/>
+  <text x="32" y="13" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#d4af37" letter-spacing="1">E'95</text>
+</svg>

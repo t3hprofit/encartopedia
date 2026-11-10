@@ -1,0 +1,112 @@
+.e-splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #6ea4d8 0%, #a8c8e8 55%, #d8e6f4 78%, #e8eff8 100%);
+  overflow: hidden;
+  font-family: var(--font-serif);
+}
+.e-splash-sky {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.e-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  filter: blur(14px);
+}
+.e-splash-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.e-splash-banner {
+  flex: none;
+  height: 28%;
+  min-height: 150px;
+  background: linear-gradient(to bottom, #0a2a6a, #123c8e 40%, #0a2a6a);
+  border-top: 2px solid #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  position: relative;
+}
+.e-splash-title {
+  color: transparent;
+  background: linear-gradient(to bottom, #f4e3a1 0%, #d4af37 45%, #8a6d1d 55%, #e7cf84 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: clamp(34px, 6.5vw, 72px);
+  letter-spacing: 0.06em;
+  font-weight: bold;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  line-height: 1;
+}
+.e-splash-title small {
+  display: block;
+  font-size: 0.26em;
+  letter-spacing: 0.42em;
+  color: #c8d4ee;
+  -webkit-text-fill-color: #c8d4ee;
+  margin-bottom: 8px;
+  font-family: var(--font-ui);
+  text-shadow: none;
+}
+.e-enter {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: #fff;
+  background: linear-gradient(to bottom, #3a6cc8, #1c3f8a);
+  border: 2px solid #d4af37;
+  padding: 12px 34px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+}
+.e-enter:hover {
+  background: linear-gradient(to bottom, #4a7cd8, #2c4f9a);
+}
+.e-splash-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 16px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: #c8d4ee;
+}
+.e-highlights {
+  display: flex;
+  gap: 8px;
+}
+.e-highlight-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #e7cf84;
+  border: 1px solid #d4af37;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.e-highlight-btn:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+.e-splash-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #c8d4ee;
+  cursor: pointer;
+}

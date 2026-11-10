@@ -1,0 +1,129 @@
+.e-pp {
+  position: fixed;
+  top: 70px;
+  right: 28px;
+  width: 300px;
+  z-index: 150;
+  background: var(--e-parchment);
+  border: 2px solid #0a1a3a;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-ui);
+}
+.e-pp-title {
+  background: #0a1a3a;
+  color: #d8e0f0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+}
+.e-pp-title button {
+  background: none;
+  border: none;
+  color: #d8e0f0;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font-ui);
+}
+.e-pp-count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--e-parchment-dark);
+  border-bottom: 1px solid var(--e-putty-dark);
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.e-pp-search {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px 2px;
+}
+.e-pp-search input {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid var(--e-putty-dark);
+  background: #fffdf4;
+  color: var(--e-ink);
+}
+.e-pp-suggest {
+  padding: 2px 8px 0;
+  font-size: 11px;
+  color: var(--e-ink-soft);
+}
+.e-pp-suggest button {
+  background: none;
+  border: none;
+  color: var(--e-link);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0 3px;
+  text-decoration: underline;
+}
+.e-pp-body {
+  display: flex;
+  min-height: 0;
+}
+.e-pp-list {
+  flex: 1;
+  height: 300px;
+  overflow: auto;
+  margin: 6px 0 6px 8px;
+  border: 1px solid var(--e-putty-dark);
+  background: #fffdf4;
+}
+.e-pp-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--e-ink);
+  padding: 3px 8px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.e-pp-item:hover {
+  background: var(--e-parchment-dark);
+}
+.e-pp-item small {
+  display: block;
+  color: var(--e-ink-soft);
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e-pp-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px;
+  width: 86px;
+  flex: none;
+}
+.e-pp-filters .e-btn {
+  padding: 4px 6px;
+  font-size: 11px;
+}
+.e-pp-filters .e-btn.active {
+  background: #0a1a3a;
+  color: #d8e0f0;
+}
+.e-pp-hint {
+  padding: 20px 10px;
+  color: var(--e-ink-soft);
+  font-size: 11px;
+  text-align: center;
+}

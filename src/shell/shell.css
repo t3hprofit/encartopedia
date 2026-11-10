@@ -1,0 +1,44 @@
+.e-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--e-backdrop);
+}
+.e-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--e-backdrop);
+  padding: 8px;
+}
+.e-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--e-parchment);
+  border: 1px solid #000;
+  overflow: hidden;
+}
+.e-page-scroll {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+/* Welcome view */
+.e-welcome {
+  padding: 28px 40px;
+  max-width: 760px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.e-welcome h2 {
+  font-size: 17px;
+  margin: 22px 0 6px;
+}
+.e-welcome a {
+  color: var(--e-link);
+}

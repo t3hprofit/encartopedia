@@ -1,0 +1,82 @@
+/* Encartopedia 95 — flat, dark design language of Encarta '95:
+   black chrome, parchment content, putty buttons, maroon hyperlinks. */
+
+:root {
+  --e-black: #000000;
+  --e-backdrop: #101010;
+  --e-charcoal: #2b2b2b;
+  --e-olive: #45452c;
+  --e-olive-dark: #333320;
+
+  --e-parchment: #f1e9d2;
+  --e-parchment-dark: #e3d7b6;
+  --e-parchment-shadow: #cfc3a0;
+  --e-ink: #221b0e;
+  --e-ink-soft: #4a4232;
+
+  --e-putty: #c9bb9c;
+  --e-putty-hi: #ded2b4;
+  --e-putty-dark: #a3956f;
+
+  --e-link: #8f1a1a;
+  --e-link-visited: #6e2a2a;
+
+  --e-gold: #d4af37;
+  --e-gold-soft: #e7cf84;
+  --e-gold-dark: #9a7b1f;
+
+  --e-banner-text: #f5f0e0;
+  --e-info-blue: #2a5db0;
+  --e-watermark: rgba(74, 66, 50, 0.1);
+
+  --font-serif: Georgia, 'Palatino Linotype', 'Times New Roman', serif;
+  --font-ui: Verdana, Tahoma, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--e-backdrop);
+  color: var(--e-ink);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Thin flat custom scrollbars, as Encarta drew its own */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--e-parchment-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--e-putty-dark);
+  border: 2px solid var(--e-parchment-dark);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--e-olive);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--e-putty-dark) var(--e-parchment-dark);
+}
+
+a {
+  color: var(--e-link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

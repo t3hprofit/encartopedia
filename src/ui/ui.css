@@ -1,0 +1,228 @@
+/* ---- Title bar: black, letter-spaced caps, app-drawn controls ---- */
+.e-titlebar {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  background: var(--e-black);
+  color: #d8d8d8;
+  padding: 0 4px 0 10px;
+  flex: none;
+}
+.e-titlebar-name {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.55em;
+  color: #c8c8c8;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.e-titlebar button {
+  width: 22px;
+  height: 18px;
+  margin-left: 3px;
+  border: 1px solid #555;
+  background: #1c1c1c;
+  color: #cfcfcf;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: var(--font-ui);
+}
+.e-titlebar button:hover {
+  background: #333;
+}
+.e-titlebar .e-info {
+  border-color: var(--e-info-blue);
+  color: #9db9e8;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* ---- Toolbar ---- */
+.e-toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  background: var(--e-charcoal);
+  padding: 2px 4px;
+  flex: none;
+}
+.e-toolbar .spacer {
+  flex: 1;
+}
+
+/* ---- Flat putty buttons ---- */
+.e-btn {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--e-ink);
+  background: var(--e-putty);
+  border: 1px solid var(--e-putty-dark);
+  border-bottom-color: #7e7152;
+  padding: 4px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.e-btn:hover {
+  background: var(--e-putty-hi);
+}
+.e-btn:active {
+  background: var(--e-putty-dark);
+}
+.e-btn:disabled {
+  color: #8d8570;
+  cursor: default;
+  background: var(--e-putty);
+}
+.e-btn.dark {
+  background: var(--e-charcoal);
+  color: #e8e2d0;
+  border-color: #000;
+}
+.e-btn.dark:hover {
+  background: #3d3d3d;
+}
+.e-btn.gold {
+  background: var(--e-black);
+  color: var(--e-gold);
+  border-color: var(--e-gold-dark);
+}
+
+/* ---- Pull-down menus (dark olive panel, white text) ---- */
+.e-pulldown {
+  position: relative;
+}
+.e-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 120;
+  min-width: 230px;
+  background: var(--e-olive);
+  border: 1px solid #1f1f12;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+  padding: 2px 0;
+}
+.e-menu.black {
+  background: var(--e-black);
+  border-color: var(--e-gold-dark);
+}
+.e-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #f0ecd8;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.e-menu-item:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.e-menu-item .accent {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.e-menu.black .e-menu-item {
+  color: var(--e-gold-soft);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  padding: 9px 16px;
+}
+.e-menu-sep {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 3px 0;
+}
+.e-menu-item .f-icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+/* ---- Dialogs (custom-drawn; parchment on black) ---- */
+.e-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.e-dialog {
+  background: var(--e-parchment);
+  border: 2px solid var(--e-black);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
+  min-width: 320px;
+  max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+.e-dialog-title {
+  background: var(--e-black);
+  color: var(--e-banner-text);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.e-dialog-title button {
+  background: none;
+  border: 1px solid #666;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 11px;
+  width: 20px;
+  height: 17px;
+  line-height: 1;
+}
+.e-dialog-body {
+  padding: 14px 16px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ---- Black article/title banners ---- */
+.e-banner {
+  background: var(--e-black);
+  color: var(--e-banner-text);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.e-banner small {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: #b9b29a;
+}
+
+/* ---- Select-style pulldown trigger ---- */
+.e-dd-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.e-dd-trigger::before {
+  content: '▼';
+  font-size: 8px;
+}
+.e-mn-trigger::before {
+  content: '▸';
+  font-size: 10px;
+}
