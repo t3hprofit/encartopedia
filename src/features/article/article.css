@@ -1,0 +1,170 @@
+.e-article-layout {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ---- left outline pane ---- */
+.e-outline {
+  width: 190px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: var(--e-parchment-dark);
+  border-right: 1px solid var(--e-putty-dark);
+}
+.e-outline-list {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 0;
+}
+.e-outline-list button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--e-link);
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.e-outline-list button:hover {
+  text-decoration: underline;
+}
+.e-outline-tabs {
+  display: flex;
+  flex: none;
+  border-top: 1px solid var(--e-putty-dark);
+}
+.e-outline-tabs button {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  padding: 6px 2px;
+  background: var(--e-putty);
+  color: var(--e-ink);
+  border: none;
+  border-right: 1px solid var(--e-putty-dark);
+  cursor: pointer;
+}
+.e-outline-tabs button.active {
+  background: var(--e-parchment-dark);
+  font-weight: bold;
+}
+
+/* ---- article body ---- */
+.e-article-scroll {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+.e-article {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  padding: 24px 36px 60px;
+  font-family: var(--font-serif);
+  font-size: var(--e-article-size, 15px);
+  line-height: 1.62;
+  color: var(--e-ink);
+}
+.e-article h2 {
+  font-size: 1.25em;
+  margin: 1.6em 0 0.4em;
+  border-bottom: 1px solid var(--e-putty-dark);
+  padding-bottom: 2px;
+}
+.e-article h3,
+.e-article h4 {
+  font-size: 1.05em;
+  margin: 1.2em 0 0.3em;
+}
+.e-article a[href] {
+  color: var(--e-link);
+}
+.e-article p {
+  margin: 0.55em 0;
+}
+.e-article figure,
+.e-article figure.mw-default-size {
+  float: right;
+  clear: right;
+  margin: 6px 0 10px 18px;
+  max-width: 260px;
+  background: var(--e-parchment-dark);
+  border: 1px solid var(--e-putty-dark);
+  padding: 5px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+.e-article figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.e-article figcaption {
+  padding-top: 4px;
+  color: var(--e-ink-soft);
+}
+.e-article table {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  border-collapse: collapse;
+  background: var(--e-parchment-dark) !important;
+  color: var(--e-ink) !important;
+  max-width: 100%;
+}
+.e-article table.infobox {
+  float: right;
+  clear: right;
+  margin: 0 0 12px 18px;
+  max-width: 280px;
+  border: 1px solid var(--e-putty-dark);
+}
+.e-article th,
+.e-article td {
+  border: 1px solid var(--e-putty-dark);
+  padding: 3px 6px;
+  background: transparent !important;
+  color: var(--e-ink) !important;
+}
+.e-article .mw-kartographer-maplink {
+  pointer-events: none;
+}
+.e-article ul,
+.e-article ol {
+  padding-left: 1.5em;
+}
+
+/* loading & error states */
+.e-article-status {
+  padding: 60px;
+  text-align: center;
+  font-family: var(--font-ui);
+  color: var(--e-ink-soft);
+}
+
+.e-article-footer {
+  max-width: 720px;
+  padding: 0 36px 28px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--e-ink-soft);
+  position: relative;
+  z-index: 1;
+}
+
+/* Editor's Choice flag (a wry nod to a certain 1995 biography) */
+.e-editors-choice {
+  display: inline-block;
+  margin-left: 12px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--e-gold);
+  border: 1px solid var(--e-gold-dark);
+  padding: 2px 7px;
+  vertical-align: middle;
+}
