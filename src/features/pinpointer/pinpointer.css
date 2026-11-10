@@ -121,6 +121,63 @@
   background: #0a1a3a;
   color: #d8e0f0;
 }
+.e-pp-filters .e-btn.lit {
+  border-color: var(--e-gold-dark);
+  box-shadow: inset 0 0 0 1px var(--e-gold-dark);
+}
+.e-pp-panel {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--e-putty-dark);
+  font-size: 11px;
+  max-height: 150px;
+  overflow: auto;
+}
+.e-pp-panel label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0;
+  cursor: pointer;
+}
+.e-pp-panel .accent {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.e-pp-note {
+  color: var(--e-ink-soft);
+  font-size: 10px;
+  padding-top: 4px;
+}
+.e-pp-years {
+  display: flex;
+  gap: 8px;
+}
+.e-pp-years input {
+  width: 64px;
+  font-size: 11px;
+  border: 1px solid var(--e-putty-dark);
+  background: #fffdf4;
+  padding: 2px 4px;
+}
+.e-pp-eras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-top: 6px;
+}
+.e-pp-eras .e-btn {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+.e-pp-wizard {
+  padding: 8px 10px;
+  font-size: 11px;
+  background: #0a1a3a;
+  color: #d8e0f0;
+  line-height: 1.5;
+}
 .e-pp-hint {
   padding: 20px 10px;
   color: var(--e-ink-soft);

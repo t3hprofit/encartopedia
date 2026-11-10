@@ -6,6 +6,8 @@ export interface TitleHit {
   title: string
   description?: string
   thumbnail?: { url: string } | null
+  /** wikibase item id, present when the query needed Wikidata (Time filter) */
+  wikibase?: string
 }
 
 interface TitleSearchResponse {
