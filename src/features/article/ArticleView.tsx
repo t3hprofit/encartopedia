@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { getArticle, getCategories, getRelated, ArticleDoc } from '../../api/page'
+import { getArticle, getCategories, getRelated, getSummary, ArticleDoc, PageSummary } from '../../api/page'
+import { getAnthemFile, getPronunciationFiles } from '../../api/media'
+import { MediaDialog } from '../media/MediaDialog'
 import { pathToTitle, titleToPath } from '../../api/client'
 import { PullDown } from '../../ui/PullDown'
 import { Watermark } from '../../theme/Watermark'
@@ -24,6 +26,8 @@ export function ArticleView() {
   const [related, setRelated] = useState<string[]>([])
   const [pane, setPane] = useState<Pane>('outline')
   const [size, setSize] = useState<SizeName>('Medium')
+  const [summary, setSummary] = useState<PageSummary | null>(null)
+  const [media, setMedia] = useState<{ file: string; caption?: string; anthem?: boolean } | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -46,16 +50,52 @@ export function ArticleView() {
     getRelated(title, ctl.signal)
       .then(setRelated)
       .catch(() => {})
+    setSummary(null)
+    getSummary(title, ctl.signal)
+      .then(setSummary)
+      .catch(() => {})
     return () => ctl.abort()
   }, [title])
 
-  // internal link clicks already carry #/w/article/... hrefs; let the router take them
+  // internal links route in-app; clicking any picture opens its Caption dialog
   const onBodyClick = (e: React.MouseEvent) => {
-    const a = (e.target as HTMLElement).closest('a')
+    const el = e.target as HTMLElement
+    const a = el.closest('a')
     if (a?.getAttribute('href')?.startsWith('#/w/article/')) {
       e.preventDefault()
       navigate(a.getAttribute('href')!.slice(1))
+      return
     }
+    const img = el.closest('figure, [typeof*="mw:File"]')?.querySelector('img') ?? (el.tagName === 'IMG' ? el : null)
+    const resource = img?.getAttribute('resource') ?? img?.closest('[resource]')?.getAttribute('resource')
+    if (resource?.startsWith('./File:')) {
+      e.preventDefault()
+      const figcaption = el.closest('figure')?.querySelector('figcaption')?.textContent ?? undefined
+      setMedia({ file: decodeURIComponent(resource.slice(2)), caption: figcaption })
+    }
+  }
+
+  // Pronunciation: Wikidata P443 audio if it exists, else the browser speaks.
+  const pronounce = async () => {
+    if (summary?.wikibase_item) {
+      try {
+        const files = await getPronunciationFiles(summary.wikibase_item)
+        if (files[0]) {
+          setMedia({ file: files[0] })
+          return
+        }
+      } catch {
+        /* fall through to speech */
+      }
+    }
+    speechSynthesis.speak(new SpeechSynthesisUtterance(title))
+  }
+
+  const isCountry = /\bcountry\b|sovereign state/i.test(summary?.description ?? '')
+  const playAnthem = async () => {
+    if (!summary?.wikibase_item) return
+    const f = await getAnthemFile(summary.wikibase_item).catch(() => null)
+    if (f) setMedia({ file: f, anthem: true })
   }
 
   const jump = (id: string) => {
@@ -72,6 +112,14 @@ export function ArticleView() {
           <span className="e-editors-choice" title="This biography received uncommonly generous coverage in a certain 1995 encyclopedia.">
             EDITOR&rsquo;S CHOICE
           </span>
+        )}
+        <button className="e-say" title="Hear it pronounced" onClick={pronounce}>
+          ◖))
+        </button>
+        {isCountry && (
+          <button className="e-say" title="National Anthem" onClick={playAnthem}>
+            ♪ Anthem
+          </button>
         )}
         <small>{area.label.toUpperCase()}</small>
       </div>
@@ -157,6 +205,14 @@ export function ArticleView() {
           )}
         </div>
       </div>
+      {media && (
+        <MediaDialog
+          fileTitle={media.file}
+          caption={media.caption}
+          isAnthem={media.anthem}
+          onClose={() => setMedia(null)}
+        />
+      )}
     </>
   )
 }

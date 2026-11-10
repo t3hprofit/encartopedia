@@ -156,6 +156,26 @@
   z-index: 1;
 }
 
+.e-article figure img,
+.e-article .infobox img {
+  cursor: pointer;
+}
+
+/* small banner buttons: pronunciation + anthem */
+.e-say {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  background: var(--e-charcoal);
+  color: var(--e-gold-soft);
+  border: 1px solid #555;
+  padding: 3px 8px;
+  cursor: pointer;
+  align-self: center;
+}
+.e-say:hover {
+  background: #3d3d3d;
+}
+
 /* Editor's Choice flag (a wry nod to a certain 1995 biography) */
 .e-editors-choice {
   display: inline-block;
