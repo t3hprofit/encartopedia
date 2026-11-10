@@ -34,10 +34,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
+  gap: 24px;
+  padding: 0 48px 28px;
   position: relative;
 }
 .e-splash-title {
+  flex: 1 1 auto;
+  min-width: 0;
   color: transparent;
   background: linear-gradient(to bottom, #f4e3a1 0%, #d4af37 45%, #8a6d1d 55%, #e7cf84 100%);
   -webkit-background-clip: text;
@@ -59,6 +62,7 @@
   text-shadow: none;
 }
 .e-enter {
+  flex: none;
   font-family: var(--font-serif);
   font-size: 22px;
   color: #fff;
@@ -109,4 +113,63 @@
   gap: 6px;
   color: #c8d4ee;
   cursor: pointer;
+}
+
+/* Phones: stack the banner so the title, Enter button and footer all fit. */
+@media (max-width: 640px) {
+  .e-splash-banner {
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    height: auto;
+    min-height: 0;
+    padding: 16px 16px 12px;
+  }
+  .e-splash-title {
+    text-align: center;
+    font-size: clamp(26px, 8.5vw, 40px);
+  }
+  .e-splash-title small {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    margin-bottom: 6px;
+  }
+  .e-enter {
+    font-size: 18px;
+    padding: 10px 28px;
+  }
+  .e-splash-foot {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0 0;
+  }
+  .e-highlights {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+/* Tablets: a smaller title so it never crowds the Enter button. */
+@media (min-width: 641px) and (max-width: 900px) {
+  .e-splash-banner {
+    padding: 0 28px 32px;
+  }
+  .e-splash-title {
+    font-size: clamp(28px, 5.5vw, 48px);
+  }
+}
+/* Short, wide windows (a phone held sideways): keep the banner compact. */
+@media (max-height: 480px) and (min-width: 641px) {
+  .e-splash-banner {
+    min-height: 150px;
+    padding: 4px 24px 36px;
+  }
+  .e-splash-title {
+    font-size: clamp(24px, 4.5vw, 44px);
+  }
+  .e-enter {
+    font-size: 18px;
+    padding: 8px 24px;
+  }
 }

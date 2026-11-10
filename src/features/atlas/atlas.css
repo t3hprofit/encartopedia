@@ -105,3 +105,19 @@
 .e-atlas-card .e-btn {
   text-align: center;
 }
+
+@media (max-width: 640px) {
+  .e-atlas-card {
+    width: auto;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    max-height: 60%;
+    overflow: auto;
+  }
+  .e-atlas-legend {
+    left: 8px;
+    bottom: 8px;
+    max-width: calc(100vw - 32px);
+  }
+}

@@ -44,6 +44,13 @@ body,
   margin: 0;
 }
 
+html {
+  /* Phones must lay out at the device width, not at the widest child. */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--e-backdrop);
   color: var(--e-ink);

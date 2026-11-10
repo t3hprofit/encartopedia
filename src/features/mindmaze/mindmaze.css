@@ -221,7 +221,7 @@
   z-index: 250;
 }
 .mm-q {
-  width: 460px;
+  width: min(460px, calc(100vw - 16px));
   max-height: 85vh;
   overflow: auto;
   background: #241d15;
@@ -312,4 +312,30 @@
   font-size: 12px;
   padding: 8px 16px;
   z-index: 40;
+}
+
+@media (max-width: 640px) {
+  .mm-play {
+    flex-direction: column;
+  }
+  .mm-room {
+    flex: none;
+  }
+  .mm-room-art {
+    height: auto;
+    aspect-ratio: 640 / 400;
+  }
+  .mm-side {
+    width: auto;
+  }
+  .mm-story h1 {
+    font-size: 30px;
+  }
+  .mm-panel {
+    padding: 14px;
+  }
+  .mm-setup-grid fieldset {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
 }

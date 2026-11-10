@@ -52,6 +52,23 @@
 .e-toolbar .spacer {
   flex: 1;
 }
+@media (max-width: 640px) {
+  /* Seven buttons do not fit a phone in one row: wrap, with the Features and
+     Tools menus keeping to the right edge of their own row. */
+  .e-toolbar {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .e-toolbar .spacer {
+    flex: 1 0 0;
+  }
+  .e-toolbar .e-pulldown:nth-last-child(2) {
+    margin-left: auto;
+  }
+  .e-btn {
+    padding: 5px 9px;
+  }
+}
 
 /* ---- Flat putty buttons ---- */
 .e-btn {
@@ -100,6 +117,7 @@
   left: 0;
   z-index: 120;
   min-width: 230px;
+  max-width: calc(100vw - 16px);
   background: var(--e-olive);
   border: 1px solid #1f1f12;
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
@@ -166,8 +184,8 @@
   background: var(--e-parchment);
   border: 2px solid var(--e-black);
   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
-  min-width: 320px;
-  max-width: 560px;
+  min-width: min(320px, calc(100vw - 16px));
+  max-width: min(560px, calc(100vw - 16px));
   max-height: 85vh;
   display: flex;
   flex-direction: column;
@@ -209,6 +227,15 @@
   display: flex;
   align-items: baseline;
   gap: 12px;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .e-banner {
+    font-size: 18px;
+    padding: 6px 12px;
+    gap: 8px;
+  }
 }
 .e-banner small {
   font-family: var(--font-ui);

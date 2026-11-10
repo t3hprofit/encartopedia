@@ -154,7 +154,7 @@
   justify-content: center;
 }
 .e-tl-card {
-  width: 420px;
+  width: min(420px, calc(100vw - 16px));
   background: var(--e-parchment);
   border: 2px solid var(--e-black);
   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
@@ -198,4 +198,16 @@
   object-fit: cover;
   flex: none;
   border: 1px solid var(--e-putty-dark);
+}
+
+@media (max-width: 640px) {
+  .e-tl-era {
+    width: calc(100vw - 70px);
+  }
+  .e-tl-end {
+    width: 110px;
+  }
+  .e-tl-scroll {
+    padding: 10px 6px;
+  }
 }

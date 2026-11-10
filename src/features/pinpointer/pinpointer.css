@@ -184,3 +184,17 @@
   font-size: 11px;
   text-align: center;
 }
+
+@media (max-width: 640px) {
+  .e-pp {
+    top: 96px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+  }
+  .e-pp-list {
+    height: 40vh;
+  }
+}

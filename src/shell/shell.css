@@ -42,3 +42,13 @@
 .e-welcome a {
   color: var(--e-link);
 }
+
+@media (max-width: 640px) {
+  .e-content {
+    padding: 4px;
+  }
+  .e-welcome {
+    padding: 16px 16px 24px;
+    font-size: 14px;
+  }
+}

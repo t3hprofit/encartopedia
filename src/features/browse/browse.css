@@ -50,3 +50,9 @@
   font-size: 11px;
   color: var(--e-ink-soft);
 }
+
+@media (max-width: 640px) {
+  .e-browse {
+    padding: 12px;
+  }
+}
