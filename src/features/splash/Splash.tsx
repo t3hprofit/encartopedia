@@ -317,7 +317,18 @@ export function Splash() {
       <div className="e-splash-banner">
         <div className="e-splash-title">
           <small>THE COMPLETE INTERACTIVE MULTIMEDIA ENCYCLOPEDIA</small>
-          ENCARTOPEDIA <span className="e-splash-struck">&rsquo;95</span> <span className="e-splash-updated">&rsquo;26</span>
+          ENCARTOPEDIA <span className="e-splash-struck">&rsquo;95</span>{' '}
+          <span className="e-splash-updated">
+            &rsquo;26
+            <svg className="e-splash-rays" viewBox="0 0 40 40" aria-hidden>
+              {/* three rays fanning out from the numeral's shoulder */}
+              <g stroke="#f4e3a1" strokeWidth="3.5" strokeLinecap="round" fill="none">
+                <line x1="5" y1="28" x2="5" y2="8" />
+                <line x1="13" y1="29" x2="27" y2="15" />
+                <line x1="16" y1="37" x2="36" y2="37" />
+              </g>
+            </svg>
+          </span>
         </div>
         <button className="e-enter" onClick={enter}>
           Enter ▶
