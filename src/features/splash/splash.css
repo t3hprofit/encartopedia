@@ -69,52 +69,42 @@
   font-family: Georgia, serif;
   font-style: italic;
   font-size: 0.92em;
-  animation: e-radiance 2.8s ease-in-out infinite;
+  animation: e-radiance 4.5s ease-in-out infinite;
 }
 @keyframes e-radiance {
   0%,
   100% {
     text-shadow:
-      0 0 6px rgba(255, 244, 196, 0.5),
-      0 0 18px rgba(232, 184, 74, 0.25),
+      0 0 4px rgba(255, 244, 196, 0.3),
       0 2px 0 rgba(0, 0, 0, 0.35);
   }
   50% {
     text-shadow:
-      0 0 10px rgba(255, 248, 220, 0.95),
-      0 0 30px rgba(240, 196, 92, 0.55),
+      0 0 7px rgba(255, 248, 220, 0.55),
+      0 0 14px rgba(240, 196, 92, 0.22),
       0 2px 0 rgba(0, 0, 0, 0.35);
   }
 }
-.e-splash-updated::before,
-.e-splash-updated::after {
+.e-splash-updated::before {
   content: '✦';
   position: absolute;
+  top: -0.28em;
+  right: -0.38em;
+  font-size: 0.26em;
   font-style: normal;
   color: #fff8dc;
-  text-shadow: 0 0 8px rgba(255, 248, 220, 0.9);
-  animation: e-twinkle 2.1s ease-in-out infinite;
-}
-.e-splash-updated::before {
-  top: -0.32em;
-  right: -0.42em;
-  font-size: 0.34em;
-}
-.e-splash-updated::after {
-  bottom: -0.1em;
-  left: -0.34em;
-  font-size: 0.22em;
-  animation-delay: 1.05s;
+  text-shadow: 0 0 5px rgba(255, 248, 220, 0.6);
+  animation: e-twinkle 3.6s ease-in-out infinite;
 }
 @keyframes e-twinkle {
   0%,
   100% {
-    opacity: 0.15;
-    transform: scale(0.7) rotate(0deg);
+    opacity: 0.1;
+    transform: scale(0.8);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.15) rotate(18deg);
+    opacity: 0.85;
+    transform: scale(1);
   }
 }
 .e-splash-title small {
