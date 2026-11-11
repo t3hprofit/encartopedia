@@ -6,6 +6,7 @@ import { Dir, FLOOR_H, FLOORS, Floor, generateFloor, mulberry32, pathTo, step } 
 import { PoolEntry, Question, buildQuestion, choiceArticle, fetchPool, scoreFor } from './questions'
 import { RoomScene } from './RoomScene'
 import { CharacterFigure, CHARACTER_IDS } from './CharacterArt'
+import { trackEvent } from '../../lib/analytics'
 import './mindmaze.css'
 
 type Phase = 'intro' | 'setup' | 'play' | 'throne'
@@ -106,6 +107,7 @@ export function MindMaze() {
     }
     save(g)
     setPhase('play')
+    trackEvent('mindmaze_start', { category: categoryId, difficulty })
   }
 
   const quit = () => {
@@ -160,6 +162,7 @@ export function MindMaze() {
           save(g)
           localStorage.removeItem(SAVE_KEY)
           setPhase('throne')
+          trackEvent('mindmaze_win', { score: g.score, category: g.categoryId, difficulty: g.difficulty })
           return
         }
         const nextFloor = (g.floor + 1) % FLOORS
