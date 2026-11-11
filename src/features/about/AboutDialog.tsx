@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Dialog } from '../../ui/Dialog'
+import { getConsent, setConsent, Consent } from '../../lib/analytics'
+import { GA_MEASUREMENT_ID } from '../../config'
 
 /** The world-and-books picture in the About box. Shift+Ctrl+right-click it
  *  to reveal the "development team photo" — the real Encarta '95 easter egg. */
@@ -75,11 +77,38 @@ export function AboutDialog({ onClose }: { onClose: () => void }) {
             </a>
             . Images are individually credited.
           </div>
+          <CookiePreference />
           <div style={{ marginTop: 10, fontSize: 10, color: 'var(--e-ink-soft)' }}>
             This product is licensed to: Strange One From Another Time
           </div>
         </div>
       </div>
     </Dialog>
+  )
+}
+
+/** Analytics cookie setting — changeable any time, honored immediately.
+ *  (Re-enabling after a decline takes effect on the next page load.) */
+function CookiePreference() {
+  const [consent, setLocal] = useState<Consent | null>(getConsent)
+  if (!GA_MEASUREMENT_ID) return null
+
+  const change = (c: Consent) => {
+    setConsent(c)
+    setLocal(c)
+  }
+
+  return (
+    <div style={{ marginTop: 10, fontSize: 11, borderTop: '1px solid var(--e-putty-dark)', paddingTop: 8 }}>
+      Analytics cookies:{' '}
+      <b>{consent === 'granted' ? 'Allowed' : consent === 'denied' ? 'Declined' : 'Not yet decided'}</b>{' '}
+      <button
+        className="e-btn"
+        style={{ padding: '1px 8px', fontSize: 10, marginLeft: 6 }}
+        onClick={() => change(consent === 'granted' ? 'denied' : 'granted')}
+      >
+        {consent === 'granted' ? 'Decline' : 'Allow'}
+      </button>
+    </div>
   )
 }

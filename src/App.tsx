@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { trackPageView } from './lib/analytics'
+import { CookieBanner } from './features/consent/CookieBanner'
 import { Shell } from './shell/Shell'
 import { Splash, shouldSkipSplash } from './features/splash/Splash'
 import { Welcome } from './features/home/Welcome'
@@ -38,6 +39,7 @@ export function App() {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <CookieBanner />
     </HashRouter>
   )
 }
