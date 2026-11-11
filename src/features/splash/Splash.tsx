@@ -7,60 +7,174 @@ import './splash.css'
 const SKIP_KEY = 'encartopedia.skipSplash'
 export const shouldSkipSplash = () => localStorage.getItem(SKIP_KEY) === '1'
 
+/** One frame of the filmstrip: dark border, sprocket holes, a tiny scene. */
+function FilmFrame({
+  x,
+  y,
+  rotate,
+  title,
+  children,
+}: {
+  x: number
+  y: number
+  rotate: number
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rotate})`}>
+      <title>{title}</title>
+      <rect x="-21" y="-17" width="42" height="34" rx="2" fill="#2b2410" stroke="#8a6d1d" strokeWidth="1.2" />
+      {[-14, 0, 14].map((hx) => (
+        <g key={hx} fill="#d4af37" opacity="0.8">
+          <rect x={hx - 2.2} y="-15" width="4.4" height="3" rx="0.8" />
+          <rect x={hx - 2.2} y="12" width="4.4" height="3" rx="0.8" />
+        </g>
+      ))}
+      <g transform="translate(0 0.5)">
+        <rect x="-17" y="-10" width="34" height="21" fill="#10131c" />
+        {children}
+      </g>
+    </g>
+  )
+}
+
 /** The golden filmstrip spiraling into a classical face, drawn as original SVG art. */
 function GoldenFace() {
-  const frames = Array.from({ length: 9 }, (_, i) => i)
   return (
-    <svg viewBox="0 0 400 340" style={{ width: 'min(52vmin, 420px)', opacity: 0.96 }}>
+    <svg viewBox="0 0 400 340" style={{ width: 'min(52vmin, 420px)', opacity: 0.97 }}>
       <defs>
         <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#f4e3a1" />
           <stop offset="0.5" stopColor="#d4af37" />
           <stop offset="1" stopColor="#8a6d1d" />
         </linearGradient>
+        <linearGradient id="goldFace" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#f0dc94" />
+          <stop offset="0.55" stopColor="#d9b63f" />
+          <stop offset="1" stopColor="#a1822a" />
+        </linearGradient>
       </defs>
-      {/* spiraling filmstrip ribbon */}
+
+      {/* filmstrip ribbon — right tail first (behind the head) */}
       <path
-        d="M30 300 C 70 210, 110 150, 190 130 C 270 110, 330 150, 330 210 C 330 265, 280 290, 230 275"
+        d="M292 96 C 346 118, 368 176, 348 230 C 332 272, 288 288, 248 272"
         fill="none"
         stroke="url(#gold)"
-        strokeWidth="34"
+        strokeWidth="40"
         strokeLinecap="round"
       />
-      {frames.map((i) => {
-        const t = i / (frames.length - 1)
-        // sample points roughly along the ribbon
-        const x = 30 + 200 * t + 60 * Math.sin(t * Math.PI)
-        const y = 300 - 170 * t + 40 * Math.sin(t * Math.PI * 1.4)
-        return <rect key={i} x={x - 7} y={y - 10} width="14" height="20" fill="#2b2410" opacity="0.65" rx="1.5" />
-      })}
-      {/* classical golden profile, facing left */}
+      {/* left sweep rising into the face */}
       <path
-        d="M232 52
-           C 196 54, 172 80, 168 112
-           C 166 124, 161 132, 155 141
-           L 143 162
-           C 141 167, 143 171, 150 171
-           C 147 177, 148 181, 154 182
-           C 150 188, 151 193, 159 194
-           C 156 202, 161 210, 173 211
-           C 178 226, 192 236, 212 236
-           C 238 238, 262 228, 272 206
-           C 284 180, 288 148, 284 116
-           C 279 78, 262 51, 232 52 Z"
-        fill="url(#gold)"
+        d="M30 306 C 66 230, 118 176, 196 148"
+        fill="none"
+        stroke="url(#gold)"
+        strokeWidth="40"
+        strokeLinecap="round"
+      />
+
+      {/* ---- classical golden profile, facing left ---- */}
+      {/* neck + shoulder drape */}
+      <path d="M212 220 q-4 32 -14 44 q40 14 76 2 q-10 -34 -8 -62 Z" fill="url(#goldFace)" stroke="#8a6d1d" strokeWidth="2" />
+      <path d="M198 262 q40 16 78 2 l8 20 q-48 18 -94 0 Z" fill="url(#gold)" stroke="#8a6d1d" strokeWidth="2" />
+      {/* head: forehead → straight Greek nose → lips → chin → jaw → back of skull */}
+      <path
+        d="M247 54
+           C 215 50, 188 66, 178 96
+           L 160 148
+           C 158 153, 160 157, 166 157
+           L 174 157
+           C 171 162, 172 166, 178 167
+           C 174 172, 175 177, 182 178
+           C 178 185, 181 192, 191 193
+           C 193 206, 203 216, 218 219
+           C 248 226, 280 214, 292 188
+           C 306 157, 304 112, 288 84
+           C 278 64, 264 56, 247 54 Z"
+        fill="url(#goldFace)"
         stroke="#8a6d1d"
         strokeWidth="2.5"
       />
-      {/* eye, brow, nostril, lips, ear */}
-      <path d="M168 118 q10 -8 20 -2" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
-      <path d="M172 128 a6 3.5 -8 1 0 14 2 a6 3.5 -8 1 0 -14 -2" fill="#5c4812" />
-      <path d="M152 166 q4 2 7 1" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M156 181 q7 2 12 -1 M158 191 q6 2 11 -1" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M236 142 a10 14 0 1 0 2 26" fill="none" stroke="#8a6d1d" strokeWidth="3" />
-      {/* laurel wreath */}
-      <path d="M190 60 q-22 10 -28 34 M212 54 q-28 8 -38 34" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
-      <path d="M186 64 q-4 8 -12 10 M198 58 q-4 8 -12 10 M176 76 q-2 8 -10 11" fill="none" stroke="#8a6d1d" strokeWidth="2.5" strokeLinecap="round" />
+      {/* cheek + jaw shading */}
+      <path d="M196 170 q10 22 26 26 q-4 8 -14 6 q-10 -10 -12 -32" fill="#b8952e" opacity="0.5" />
+      {/* serene closed eye + brow */}
+      <path d="M176 112 q12 -7 24 -1" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
+      <path d="M180 124 q10 6 19 1" fill="none" stroke="#6b5415" strokeWidth="3" strokeLinecap="round" />
+      <path d="M184 128 l-2 4 M190 129 l-1 4 M196 128 l0 4" stroke="#6b5415" strokeWidth="1.6" strokeLinecap="round" />
+      {/* nostril, lips, chin crease */}
+      <path d="M168 152 q4 3 8 2" fill="none" stroke="#8a6d1d" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M178 167 q8 3 14 0" fill="none" stroke="#8a6d1d" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M181 178 q7 4 13 1" fill="none" stroke="#8a6d1d" strokeWidth="2.2" strokeLinecap="round" />
+      {/* ear */}
+      <path d="M258 136 a11 15 0 1 0 4 29 M259 146 a5 7 0 1 0 2 13" fill="none" stroke="#8a6d1d" strokeWidth="2.6" />
+      {/* classical curls across the crown */}
+      <path
+        d="M178 96 q-4 -26 18 -38 q26 -16 54 -2 q22 10 28 34
+           q-8 -10 -20 -12 q4 10 0 18 q-8 -12 -20 -14 q2 10 -4 16 q-6 -12 -18 -13 q0 10 -7 14 q-4 -12 -15 -12 q-2 9 -8 12 q-3 -9 -8 -3 Z"
+        fill="#c9a227"
+        stroke="#8a6d1d"
+        strokeWidth="2"
+      />
+      <path d="M186 70 q10 -10 24 -10 M206 58 q14 -4 28 2 M240 58 q12 4 18 14" fill="none" stroke="#8a6d1d" strokeWidth="1.8" strokeLinecap="round" opacity="0.7" />
+      {/* laurel sprig tucked along the hairline */}
+      <g stroke="#6e7d3a" strokeWidth="2.4" fill="#8a9a4a" strokeLinecap="round">
+        <path d="M176 102 q-6 -30 26 -46" fill="none" />
+        {(
+          [
+            [174, 92, -32],
+            [178, 77, -56],
+            [189, 64, -80],
+            [203, 57, -102],
+          ] as const
+        ).map(([cx, cy, r]) => (
+          <ellipse key={`${cx}-${cy}`} cx={cx} cy={cy} rx="8" ry="3.4" transform={`rotate(${r} ${cx} ${cy})`} />
+        ))}
+        <circle cx="174" cy="101" r="3" fill="#8f1a1a" stroke="none" />
+      </g>
+
+      {/* ---- filmstrip frames: the disc's greatest hits ---- */}
+      <FilmFrame x={54} y={282} rotate={-40} title="The Space Shuttle — obligatory">
+        <rect x="-17" y="-10" width="34" height="21" fill="#0c1430" />
+        <path d="M-2 7 L1 -7 q1.5 -3 3 0 L7 7 Z" fill="#e8e8f0" />
+        <path d="M-2 4 l-6 4 l6 -1 M7 4 l6 4 l-6 -1" fill="#c0c0cc" />
+        <path d="M0 8 q2 4 5 0" fill="none" stroke="#e8a33c" strokeWidth="2" />
+        <circle cx="-10" cy="-5" r="1" fill="#fff" />
+        <circle cx="12" cy="-3" r="0.8" fill="#fff" />
+      </FilmFrame>
+      <FilmFrame x={98} y={236} rotate={-36} title="Saturn">
+        <rect x="-17" y="-10" width="34" height="21" fill="#0a0a18" />
+        <circle cx="0" cy="0" r="6" fill="#d8b36a" />
+        <ellipse cx="0" cy="0" rx="13" ry="3.6" fill="none" stroke="#e8d49a" strokeWidth="1.6" transform="rotate(-18)" />
+        <circle cx="-12" cy="-6" r="0.8" fill="#fff" />
+        <circle cx="12" cy="6" r="0.8" fill="#fff" />
+      </FilmFrame>
+      <FilmFrame x={146} y={198} rotate={-28} title="A certain smile">
+        <rect x="-17" y="-10" width="34" height="21" fill="#2a2416" />
+        <path d="M-4 9 q-2 -8 0 -12 q1.5 -4 4 -4 q2.5 0 4 4 q2 4 0 12 Z" fill="#d8b88a" />
+        <path d="M-4 -2 q4 -5 8 0 q0 -6 -4 -6 q-4 0 -4 6" fill="#3a2a14" />
+        <path d="M-1.5 3.5 q1.5 1.2 3 0" fill="none" stroke="#6b4a2a" strokeWidth="0.9" strokeLinecap="round" />
+        <path d="M-7 9 q7 3 14 0" fill="none" stroke="#5a4a6a" strokeWidth="2" />
+      </FilmFrame>
+      <FilmFrame x={352} y={160} rotate={78} title="Giza">
+        <rect x="-17" y="-10" width="34" height="21" fill="#1c2a3e" />
+        <path d="M-14 8 L-3 -6 L8 8 Z" fill="#c9a86a" />
+        <path d="M-3 -6 L-1 8 L8 8 Z" fill="#a1823e" />
+        <circle cx="10" cy="-5" r="3" fill="#e8c45c" />
+      </FilmFrame>
+      <FilmFrame x={338} y={238} rotate={48} title="The double helix">
+        <rect x="-17" y="-10" width="34" height="21" fill="#101c18" />
+        <path d="M-10 -8 q6 8 0 16 M-2 -8 q-6 8 0 16" fill="none" stroke="#6fd0a8" strokeWidth="1.6" />
+        <path d="M-9 -4 h6 M-10 0 h8 M-9 4 h6" stroke="#9be8c8" strokeWidth="1.1" />
+        <path d="M6 -8 q6 8 0 16 M14 -8 q-6 8 0 16" fill="none" stroke="#6fd0a8" strokeWidth="1.6" />
+        <path d="M7 -4 h6 M6 0 h8 M7 4 h6" stroke="#9be8c8" strokeWidth="1.1" />
+      </FilmFrame>
+      <FilmFrame x={282} y={286} rotate={18} title="One frame from 2026">
+        <rect x="-17" y="-10" width="34" height="21" fill="#1a1612" />
+        {/* a small coral asterisk, for the assistants */}
+        <g stroke="#d97757" strokeWidth="2.6" strokeLinecap="round">
+          <path d="M0 -7 L0 7 M-6.1 -3.5 L6.1 3.5 M-6.1 3.5 L6.1 -3.5" />
+        </g>
+      </FilmFrame>
     </svg>
   )
 }
