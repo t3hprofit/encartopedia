@@ -24,3 +24,16 @@
   display: flex;
   gap: 8px;
 }
+
+@media (max-width: 640px) {
+  .e-cookiebar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+  .e-cookiebar-actions {
+    justify-content: flex-end;
+  }
+}

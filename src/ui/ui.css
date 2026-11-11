@@ -52,8 +52,9 @@
 /* ---- Toolbar ---- */
 .e-toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
-  gap: 1px;
+  gap: 2px 1px;
   background: var(--e-charcoal);
   padding: 2px 4px;
   flex: none;
@@ -64,10 +65,6 @@
 @media (max-width: 640px) {
   /* Seven buttons do not fit a phone in one row: wrap, with the Features and
      Tools menus keeping to the right edge of their own row. */
-  .e-toolbar {
-    flex-wrap: wrap;
-    row-gap: 2px;
-  }
   .e-toolbar .spacer {
     flex: 1 0 0;
   }

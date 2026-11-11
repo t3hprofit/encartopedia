@@ -449,16 +449,69 @@
 @media (max-width: 640px) {
   .mm-play {
     flex-direction: column;
+    padding: 6px;
+    gap: 8px;
   }
   .mm-room {
+    flex: none;
+  }
+  .mm-room-frame {
     flex: none;
   }
   .mm-room-art {
     height: auto;
     aspect-ratio: 640 / 400;
   }
+  /* Side panel becomes a compact grid: score and matches on the left,
+     a smaller floor plan on the right, the quit button across the bottom. */
   .mm-side {
     width: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'score map'
+      'matches map'
+      'quit quit';
+    gap: 8px;
+    align-items: start;
+  }
+  .mm-score {
+    grid-area: score;
+    gap: 8px;
+  }
+  .mm-score b {
+    font-size: 16px;
+  }
+  .mm-map {
+    grid-area: map;
+    padding: 4px 6px 8px;
+  }
+  .mm-map-head {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+  .mm-compass {
+    width: 16px;
+    height: 16px;
+  }
+  .mm-map-cell {
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 8px;
+  }
+  .mm-matches {
+    grid-area: matches;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .mm-match {
+    width: 22px;
+    height: 26px;
+    font-size: 14px;
+  }
+  .mm-side > .e-btn {
+    grid-area: quit;
   }
   .mm-story h1 {
     font-size: 30px;
