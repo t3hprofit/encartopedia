@@ -1,14 +1,18 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AboutDialog } from '../features/about/AboutDialog'
 import { Dialog } from '../ui/Dialog'
 
 export function TitleBar() {
+  const navigate = useNavigate()
   const [about, setAbout] = useState(false)
   const [closing, setClosing] = useState(false)
 
   return (
     <div className="e-titlebar">
-      <span className="e-titlebar-name">E N C A R T O P E D I A</span>
+      <button className="e-titlebar-name" title="Return to the Introduction" onClick={() => navigate('/w')}>
+        E N C A R T O P E D I A
+      </button>
       <button className="e-info" title="About Encartopedia" onClick={() => setAbout(true)}>
         i
       </button>

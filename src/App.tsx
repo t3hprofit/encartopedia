@@ -1,4 +1,7 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { trackPageView } from './lib/analytics'
+import { CookieBanner } from './features/consent/CookieBanner'
 import { Shell } from './shell/Shell'
 import { Splash, shouldSkipSplash } from './features/splash/Splash'
 import { Welcome } from './features/home/Welcome'
@@ -9,9 +12,19 @@ import { TimelineView } from './features/timeline/TimelineView'
 import { GalleryView } from './features/gallery/GalleryView'
 import { MindMaze } from './features/mindmaze/MindMaze'
 
+/** Reports every route change (and the initial route) to analytics. */
+function PageViewTracker() {
+  const location = useLocation()
+  useEffect(() => {
+    trackPageView(location.pathname)
+  }, [location.pathname])
+  return null
+}
+
 export function App() {
   return (
     <HashRouter>
+      <PageViewTracker />
       <Routes>
         <Route path="/" element={shouldSkipSplash() ? <Navigate to="/w" replace /> : <Splash />} />
         <Route path="/w" element={<Shell />}>
@@ -26,6 +39,7 @@ export function App() {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <CookieBanner />
     </HashRouter>
   )
 }

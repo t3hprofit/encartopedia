@@ -32,11 +32,27 @@
   border-top: 1px solid var(--e-putty-dark);
   padding-top: 6px;
 }
+/* the list itself scrolls; the dialog stays a sane height */
+.e-tool-notelist {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
 .e-tool-note {
   border: 1px solid var(--e-putty-dark);
   background: var(--e-parchment-dark);
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+}
+.e-tool-note .e-tool-row {
+  margin-bottom: 0;
+  flex-wrap: nowrap;
+}
+.e-tool-note-btn {
+  flex: none;
+  padding: 2px 8px;
+  font-size: 10px;
+  white-space: nowrap;
 }
 .e-tool-note a {
   flex: 1;

@@ -4,6 +4,9 @@ import { getSummary, PageSummary } from '../../api/page'
 import { playDoor, playTrumpet, playWrong, playClick } from '../../sfx/audio'
 import { Dir, FLOOR_H, FLOORS, Floor, generateFloor, mulberry32, pathTo, step } from './maze'
 import { PoolEntry, Question, buildQuestion, choiceArticle, fetchPool, scoreFor } from './questions'
+import { RoomScene } from './RoomScene'
+import { CharacterFigure, CHARACTER_IDS } from './CharacterArt'
+import { trackEvent } from '../../lib/analytics'
 import './mindmaze.css'
 
 type Phase = 'intro' | 'setup' | 'play' | 'throne'
@@ -104,6 +107,7 @@ export function MindMaze() {
     }
     save(g)
     setPhase('play')
+    trackEvent('mindmaze_start', { category: categoryId, difficulty })
   }
 
   const quit = () => {
@@ -116,11 +120,10 @@ export function MindMaze() {
 
   const floor = game ? floors[game.floor] : null
   const cell = floor && game ? floor.cells[game.y][game.x] : null
-  const host = useMemo(() => {
-    if (!game) return CAST[0]
-    const r = mulberry32(game.seed + game.floor * 97 + game.y * 31 + game.x)()
-    return CAST[Math.floor(r * CAST.length)]
-  }, [game?.x, game?.y, game?.floor, game?.seed]) // eslint-disable-line react-hooks/exhaustive-deps
+  const roomSeed = game ? ((game.seed ^ (game.floor * 7919 + game.y * 131 + game.x * 17)) >>> 0) : 0
+  const hostIdx = useMemo(() => Math.floor(mulberry32(roomSeed + 1)() * CAST.length), [roomSeed])
+  const host = CAST[hostIdx]
+  const hostId = CHARACTER_IDS[hostIdx]
 
   const knock = (dir: Dir) => {
     if (!cell?.open[dir] || question) return
@@ -159,6 +162,7 @@ export function MindMaze() {
           save(g)
           localStorage.removeItem(SAVE_KEY)
           setPhase('throne')
+          trackEvent('mindmaze_win', { score: g.score, category: g.categoryId, difficulty: g.difficulty })
           return
         }
         const nextFloor = (g.floor + 1) % FLOORS
@@ -307,9 +311,16 @@ export function MindMaze() {
   return (
     <div className="mm-stage mm-play">
       <div className="mm-room">
-        <RoomArt cell={cell} onDoor={knock} />
+        <div className="mm-room-frame" key={`${game.floor}-${game.x}-${game.y}`}>
+          <RoomScene seed={roomSeed} open={cell.open} character={hostId} onDoor={knock} />
+        </div>
         <div className="mm-host">
-          <b>{host.name}:</b> {host.line}
+          <span className="mm-host-portrait">
+            <CharacterFigure id={hostId} />
+          </span>
+          <span>
+            <b>{host.name}:</b> {host.line}
+          </span>
         </div>
       </div>
       <div className="mm-side">
@@ -326,6 +337,15 @@ export function MindMaze() {
           </div>
         </div>
         <div className="mm-map">
+          <div className="mm-map-head">
+            <span>FLOOR PLAN</span>
+            <svg viewBox="0 0 24 24" className="mm-compass">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#6b5a3a" strokeWidth="1.5" />
+              <path d="M12 3 L14 12 L12 21 L10 12 Z" fill="#8f1a1a" />
+              <path d="M3 12 L12 10 L21 12 L12 14 Z" fill="#6b5a3a" />
+              <text x="12" y="2.5" textAnchor="middle" fontSize="5" fill="#6b5a3a">N</text>
+            </svg>
+          </div>
           {floor.cells.map((row, y) => (
             <div className="mm-map-row" key={y}>
               {row.map((c, x) => {
@@ -427,100 +447,75 @@ function QuestionTimer({ startedAt }: { startedAt: number }) {
   }, [])
   const frac = Math.max(0, 1 - (now - startedAt) / 60000)
   return (
-    <div className="mm-timer">
-      <span style={{ width: `${frac * 100}%`, background: frac > 0.33 ? 'var(--e-gold)' : '#b33' }} />
+    <div className="mm-fuse" title="Answer before the fuse burns out — faster earns more">
+      <span className="mm-fuse-burn" style={{ width: `${frac * 100}%` }} />
+      {frac > 0 && <span className="mm-fuse-spark" style={{ left: `calc(${frac * 100}% - 6px)` }} />}
     </div>
   )
 }
 
-/** The stone room, first-person-ish, doors appearing where passages exist. */
-function RoomArt({ cell, onDoor }: { cell: { open: Record<Dir, boolean> }; onDoor: (d: Dir) => void }) {
-  return (
-    <svg viewBox="0 0 640 400" className="mm-room-art">
-      <defs>
-        <linearGradient id="mmfloor" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#4a4038" />
-          <stop offset="1" stopColor="#2b2520" />
-        </linearGradient>
-      </defs>
-      {/* walls */}
-      <rect width="640" height="400" fill="#3a332c" />
-      <polygon points="0,0 640,0 560,70 80,70" fill="#453c33" />
-      <polygon points="0,0 80,70 80,330 0,400" fill="#38302a" />
-      <polygon points="640,0 560,70 560,330 640,400" fill="#332c26" />
-      <rect x="80" y="70" width="480" height="260" fill="#413930" />
-      <polygon points="0,400 80,330 560,330 640,400" fill="url(#mmfloor)" />
-      {/* stone courses */}
-      {Array.from({ length: 5 }, (_, i) => (
-        <line key={i} x1="80" y1={100 + i * 48} x2="560" y2={100 + i * 48} stroke="#352e27" strokeWidth="2" />
-      ))}
-      {/* torch */}
-      <g>
-        <rect x="120" y="120" width="8" height="34" fill="#5a4632" />
-        <circle cx="124" cy="112" r="10" fill="#e8a33c" opacity="0.85">
-          <animate attributeName="r" values="9;11;9" dur="1.3s" repeatCount="indefinite" />
-        </circle>
-      </g>
-      {/* wall painting */}
-      <g>
-        <rect x="170" y="110" width="90" height="66" fill="#241e18" stroke="#9a7b1f" strokeWidth="4" />
-        <path d="M178 160 l20 -22 l14 14 l12 -16 l18 24 Z" fill="#4e7d4e" />
-        <circle cx="240" cy="126" r="7" fill="#e7cf84" />
-      </g>
-      {/* doors */}
-      {cell.open.N && <Door x={320} y={330} scale={1} label="N" onClick={() => onDoor('N')} />}
-      {cell.open.W && <Door x={120} y={345} scale={0.8} label="W" onClick={() => onDoor('W')} skew={18} />}
-      {cell.open.E && <Door x={520} y={345} scale={0.8} label="E" onClick={() => onDoor('E')} skew={-18} />}
-      {cell.open.S && (
-        <g className="mm-door" onClick={() => onDoor('S')}>
-          <rect x="285" y="372" width="70" height="20" rx="4" fill="#241e18" stroke="#9a7b1f" />
-          <text x="320" y="386" textAnchor="middle" fontSize="11" fill="#e7cf84" fontFamily="Georgia">
-            S ⟲ behind you
-          </text>
-        </g>
-      )}
-    </svg>
-  )
-}
-
-function Door({ x, y, scale, label, onClick, skew = 0 }: { x: number; y: number; scale: number; label: string; onClick: () => void; skew?: number }) {
-  return (
-    <g className="mm-door" transform={`translate(${x} ${y}) scale(${scale}) skewY(${skew ? skew / 10 : 0})`} onClick={onClick}>
-      <path d="M-45 0 v-120 a45 45 0 0 1 90 0 v120 Z" fill="#2b1a0e" stroke="#9a7b1f" strokeWidth="3" />
-      <path d="M-45 0 v-120 a45 45 0 0 1 90 0 v120" fill="none" stroke="#120b06" strokeWidth="8" opacity="0.4" />
-      <circle cx="28" cy="-55" r="5" fill="#d4af37" />
-      <text x="0" y="-135" textAnchor="middle" fontSize="16" fill="#e7cf84" fontFamily="Georgia">
-        {label}
-      </text>
-    </g>
-  )
-}
-
+/** Night approach to the castle: moon, bats, moat, lit windows, jester waiting. */
 function JesterArt() {
   return (
-    <svg viewBox="0 0 160 120" className="mm-jester">
-      {/* drawbridge */}
-      <rect x="20" y="96" width="120" height="10" fill="#5a4632" />
-      <line x1="30" y1="96" x2="18" y2="70" stroke="#3a2f22" strokeWidth="3" />
-      <line x1="130" y1="96" x2="142" y2="70" stroke="#3a2f22" strokeWidth="3" />
-      {/* castle gate */}
-      <rect x="40" y="30" width="80" height="66" fill="#4a4440" />
-      <path d="M56 96 v-40 a24 24 0 0 1 48 0 v40 Z" fill="#241e18" />
-      <rect x="36" y="20" width="12" height="14" fill="#4a4440" />
-      <rect x="60" y="20" width="12" height="14" fill="#4a4440" />
-      <rect x="88" y="20" width="12" height="14" fill="#4a4440" />
-      <rect x="112" y="20" width="12" height="14" fill="#4a4440" />
-      {/* dragon in window */}
-      <circle cx="112" cy="50" r="7" fill="#1a2b1a" />
-      <circle cx="110" cy="48" r="1.5" fill="#6fe06f" />
-      {/* jester */}
+    <svg viewBox="0 0 320 200" className="mm-jester">
+      <defs>
+        <linearGradient id="mmnight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#0a0e1e" />
+          <stop offset="1" stopColor="#1c1a2e" />
+        </linearGradient>
+      </defs>
+      <rect width="320" height="200" fill="url(#mmnight)" />
+      {/* stars + moon */}
+      {[[20, 20], [60, 38], [120, 14], [250, 24], [296, 48], [180, 30], [288, 90]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={i % 3 ? 1 : 1.6} fill="#e8e4d0" opacity="0.8" />
+      ))}
+      <circle cx="268" cy="38" r="20" fill="#e8e4d0" />
+      <circle cx="261" cy="33" r="4" fill="#cfcab4" />
+      <circle cx="274" cy="44" r="3" fill="#cfcab4" />
+      {/* bats */}
+      <path d="M210 60 q4 -5 8 0 q4 -5 8 0 M232 44 q3 -4 6 0 q3 -4 6 0" stroke="#000" strokeWidth="2" fill="none" />
+      {/* castle silhouette */}
+      <g fill="#201c2a" stroke="#120f1a" strokeWidth="2">
+        <rect x="60" y="78" width="200" height="86" />
+        <rect x="44" y="58" width="40" height="106" />
+        <rect x="236" y="58" width="40" height="106" />
+        <rect x="140" y="48" width="40" height="116" />
+        {[44, 56, 68, 236, 248, 260].map((x) => (
+          <rect key={x} x={x} y="50" width="9" height="10" />
+        ))}
+        {[140, 152, 164, 172].map((x) => (
+          <rect key={x} x={x} y="40" width="8" height="10" />
+        ))}
+      </g>
+      {/* pennants */}
+      <path d="M160 40 v-14 l12 4 l-12 4 M64 50 v-12 l10 3 l-10 3 M256 50 v-12 l10 3 l-10 3" stroke="#8f1a1a" fill="#8f1a1a" strokeWidth="1.5" />
+      {/* lit windows */}
+      {[[72, 94], [100, 110], [156, 80], [206, 100], [248, 92], [120, 132]].map(([x, y], i) => (
+        <path key={i} d={`M${x} ${y + 10} v-7 a4 4 0 0 1 8 0 v7 Z`} fill="#e8a33c">
+          <animate attributeName="opacity" values="0.7;1;0.8;1" dur={`${1.6 + i * 0.4}s`} repeatCount="indefinite" />
+        </path>
+      ))}
+      {/* gate + portcullis */}
+      <path d="M138 164 v-30 a22 22 0 0 1 44 0 v30 Z" fill="#0c0a12" />
+      <path d="M144 164 v-32 M152 164 v-36 M160 164 v-37 M168 164 v-36 M176 164 v-32 M138 142 h44 M138 152 h44" stroke="#3a3346" strokeWidth="2" />
+      {/* moat + drawbridge */}
+      <path d="M0 176 q40 -6 80 0 q40 6 80 0 q40 -6 80 0 q40 6 80 0 v24 h-320 Z" fill="#14202e" />
+      <path d="M26 176 q30 -4 60 0 M160 180 q30 -4 60 0 M250 174 q24 -3 48 0" stroke="#223446" strokeWidth="2" fill="none" />
+      <polygon points="128,196 192,196 186,160 134,160" fill="#4a3a26" stroke="#2e2416" strokeWidth="2" />
+      <line x1="136" y1="162" x2="118" y2="130" stroke="#2e2416" strokeWidth="3" />
+      <line x1="184" y1="162" x2="202" y2="130" stroke="#2e2416" strokeWidth="3" />
+      {/* jester with lantern on the bridge */}
       <g>
-        <circle cx="80" cy="74" r="7" fill="#e8c49a" />
-        <path d="M73 70 q-6 -8 2 -10 q2 6 -2 10 M87 70 q6 -8 -2 -10 q-2 6 2 10" fill="#8f1a1a" />
-        <circle cx="71" cy="61" r="2" fill="#d4af37" />
-        <circle cx="89" cy="61" r="2" fill="#d4af37" />
-        <rect x="74" y="81" width="12" height="15" rx="3" fill="#8f1a1a" />
-        <line x1="86" y1="84" x2="98" y2="78" stroke="#e8c49a" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="160" cy="172" r="6" fill="#e8c49a" />
+        <path d="M154 169 q-6 -7 1 -9 q2 5 -1 9 M166 169 q6 -7 -1 -9 q-2 5 1 9" fill="#8f1a1a" />
+        <circle cx="153" cy="161" r="1.8" fill="#d4af37" />
+        <circle cx="167" cy="161" r="1.8" fill="#d4af37" />
+        <path d="M155 178 h10 l-1 14 h-8 Z" fill="#8f1a1a" />
+        <line x1="165" y1="182" x2="176" y2="178" stroke="#e8c49a" strokeWidth="2.5" strokeLinecap="round" />
+        <rect x="175" y="176" width="7" height="9" rx="1.5" fill="#241e18" stroke="#9a7b1f" />
+        <circle cx="178.5" cy="180.5" r="2" fill="#e8a33c">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="1.4s" repeatCount="indefinite" />
+        </circle>
       </g>
     </svg>
   )

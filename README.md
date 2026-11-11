@@ -4,9 +4,11 @@
 Microsoft Encarta '95, running as a PWA and powered by live Wikipedia/Wikimedia data instead
 of a CD-ROM.
 
-**Live:** https://t3hprofit.github.io/encartopedia/
+**Live:** https://encartopedia.com (also at https://t3hprofit.github.io/encartopedia/)
 
 > An unofficial fan homage. Not affiliated with Microsoft. Version 95 (Build 2026). Code name: Gandalf.
+
+[![The Encartopedia '95 splash screen — a golden muse over a blue sky, '95 struck through in favor of '26](docs/screenshots/splash.png)](https://encartopedia.com)
 
 ## What's on the disc
 
@@ -32,6 +34,14 @@ of a CD-ROM.
   (REPORT.DOC), and the Browse Panel with Random and A–Z.
 - Several easter eggs, at least one of which requires Shift+Ctrl and a right mouse button,
   and one of which is Ctrl+Z.
+
+## Screenshots
+
+| | |
+|---|---|
+| ![The Apollo 11 article: parchment page, outline pane, moon-landing photo and fact box](docs/screenshots/article.png)<br><sub>**Articles** — live Wikipedia, restyled; outline pane, fact boxes, per-image credits</sub> | ![The Atlas: a pastel Natural Earth world map with Scale & Legend](docs/screenshots/atlas.png)<br><sub>**Atlas** — pastel nations, click-to-zoom, facts from one cached Wikidata query</sub> |
+| ![The Timeline: era columns from Prehistory onward with a live On This Day strip](docs/screenshots/timeline.png)<br><sub>**Timeline** — 15,000,000 BC to the present, plus live "On This Day"</sub> | ![MindMaze: the castle of King Miser the First at night, a jester at the drawbridge](docs/screenshots/mindmaze.png)<br><sub>**MindMaze** — five floors, timed questions generated live from the encyclopedia</sub> |
+| ![The Media Gallery: a grid of Pictures of the Day](docs/screenshots/gallery.png)<br><sub>**Media Gallery** — Pictures of the Day and per-article media</sub> | ![The Welcome page explaining where to begin](docs/screenshots/welcome.png)<br><sub>**Welcome** — words in red are links; fall down the rabbit hole, as nature intended</sub> |
 
 ## Running it
 

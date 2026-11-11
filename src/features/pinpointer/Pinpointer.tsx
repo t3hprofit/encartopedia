@@ -5,6 +5,7 @@ import { PinpointerQuery, pinpointerSearch } from '../../api/pinpointer'
 import { titleToPath } from '../../api/client'
 import { AREAS } from '../../theme/areas'
 import { playClick } from '../../sfx/audio'
+import { trackEvent } from '../../lib/analytics'
 import './pinpointer.css'
 
 type Filter = 'word' | 'category' | 'media' | 'time' | 'place'
@@ -92,6 +93,8 @@ export function Pinpointer({ onClose }: { onClose: () => void }) {
 
   const open = (hit: TitleHit) => {
     playClick()
+    // which filter produced the hit, never the query text itself
+    trackEvent('pinpointer_result_click', { filter })
     navigate(`/w/article/${titleToPath(hit.key)}`)
   }
 
