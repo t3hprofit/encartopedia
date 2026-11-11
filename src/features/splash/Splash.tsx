@@ -317,7 +317,7 @@ export function Splash() {
       <div className="e-splash-banner">
         <div className="e-splash-title">
           <small>THE COMPLETE INTERACTIVE MULTIMEDIA ENCYCLOPEDIA</small>
-          ENCARTOPEDIA &rsquo;95
+          ENCARTOPEDIA <span className="e-splash-struck">&rsquo;95</span> <span className="e-splash-updated">&rsquo;26</span>
         </div>
         <button className="e-enter" onClick={enter}>
           Enter ▶
