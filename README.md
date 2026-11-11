@@ -4,7 +4,7 @@
 Microsoft Encarta '95, running as a PWA and powered by live Wikipedia/Wikimedia data instead
 of a CD-ROM.
 
-**Live:** https://t3hprofit.github.io/encartopedia/
+**Live:** https://encartopedia.com (also at https://t3hprofit.github.io/encartopedia/)
 
 > An unofficial fan homage. Not affiliated with Microsoft. Version 95 (Build 2026). Code name: Gandalf.
 
