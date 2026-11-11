@@ -129,6 +129,7 @@ const readNotes = (): Note[] => {
 
 function NotemarkTool({ onClose }: { onClose: () => void }) {
   const [notes, setNotes] = useState<Note[]>(readNotes)
+  const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const navigate = useNavigate()
   const location = useLocation()
   const m = /^\/w\/article\/(.+)$/.exec(location.pathname)
@@ -139,6 +140,14 @@ function NotemarkTool({ onClose }: { onClose: () => void }) {
     localStorage.setItem(NOTES_KEY, JSON.stringify(n))
   }
 
+  const toggle = (title: string) =>
+    setExpanded((s) => {
+      const next = new Set(s)
+      if (next.has(title)) next.delete(title)
+      else next.add(title)
+      return next
+    })
+
   return (
     <Dialog title="Notemark" onClose={onClose} width={500}>
       {current && !notes.some((n) => n.title === current) && (
@@ -146,31 +155,48 @@ function NotemarkTool({ onClose }: { onClose: () => void }) {
           ＋ Notemark this article: {current}
         </button>
       )}
-      {notes.length === 0 && <p className="e-tool-status">No notemarks yet. Open an article and mark it.</p>}
-      {notes.map((n) => (
-        <div key={n.title} className="e-tool-note">
-          <div className="e-tool-row">
-            <a
-              onClick={(e) => {
-                e.preventDefault()
-                onClose()
-                navigate(`/w/article/${titleToPath(n.title)}`)
-              }}
-              href="#"
-            >
-              {n.title}
-            </a>
-            <button className="e-btn" onClick={() => saveAll(notes.filter((x) => x.title !== n.title))}>
-              Remove
-            </button>
-          </div>
-          <textarea
-            placeholder="Your note on this article…"
-            value={n.note}
-            onChange={(e) => saveAll(notes.map((x) => (x.title === n.title ? { ...x, note: e.target.value } : x)))}
-          />
-        </div>
-      ))}
+      {notes.length === 0 ? (
+        <p className="e-tool-status">No notemarks yet. Open an article and mark it.</p>
+      ) : (
+        <p className="e-tool-status">
+          {notes.length} notemark{notes.length === 1 ? '' : 's'} — click &ldquo;Note&rdquo; to jot something down.
+        </p>
+      )}
+      <div className="e-tool-notelist">
+        {notes.map((n) => {
+          const open = expanded.has(n.title) || n.note !== ''
+          return (
+            <div key={n.title} className="e-tool-note">
+              <div className="e-tool-row" style={{ marginBottom: open ? 6 : 0 }}>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onClose()
+                    navigate(`/w/article/${titleToPath(n.title)}`)
+                  }}
+                  href="#"
+                >
+                  {n.title}
+                </a>
+                <button className="e-btn e-tool-note-btn" onClick={() => toggle(n.title)}>
+                  {open ? 'Hide note' : n.note ? 'Note •' : 'Note'}
+                </button>
+                <button className="e-btn e-tool-note-btn" onClick={() => saveAll(notes.filter((x) => x.title !== n.title))}>
+                  Remove
+                </button>
+              </div>
+              {open && (
+                <textarea
+                  autoFocus={expanded.has(n.title) && n.note === ''}
+                  placeholder="Your note on this article…"
+                  value={n.note}
+                  onChange={(e) => saveAll(notes.map((x) => (x.title === n.title ? { ...x, note: e.target.value } : x)))}
+                />
+              )}
+            </div>
+          )
+        })}
+      </div>
     </Dialog>
   )
 }
