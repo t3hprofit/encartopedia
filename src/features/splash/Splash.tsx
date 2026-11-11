@@ -54,22 +54,89 @@ function GoldenFace() {
           <stop offset="0.55" stopColor="#d9b63f" />
           <stop offset="1" stopColor="#a1822a" />
         </linearGradient>
+        <radialGradient id="halo" cx="0.5" cy="0.45" r="0.5">
+          <stop offset="0" stopColor="#fff3c4" stopOpacity="0.85" />
+          <stop offset="0.55" stopColor="#f4e3a1" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#f4e3a1" stopOpacity="0" />
+        </radialGradient>
+        {/* a band of light that sweeps along the ribbon */}
+        <linearGradient id="shimmer" x1="-0.3" y1="0" x2="0" y2="0">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#fff8dc" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          <animate attributeName="x1" values="-0.3;1" dur="5.5s" repeatCount="indefinite" />
+          <animate attributeName="x2" values="0;1.3" dur="5.5s" repeatCount="indefinite" />
+        </linearGradient>
       </defs>
 
+      {/* radiant halo + sun rays behind everything */}
+      <circle cx="205" cy="165" r="165" fill="url(#halo)" />
+      <g stroke="#f4e3a1" strokeWidth="3" strokeLinecap="round" opacity="0.5">
+        {Array.from({ length: 12 }, (_, i) => {
+          const a = (i * Math.PI) / 6 + 0.26
+          const inner = 128
+          const outer = i % 2 ? 150 : 166
+          return (
+            <line
+              key={i}
+              x1={205 + inner * Math.cos(a)}
+              y1={165 + inner * Math.sin(a)}
+              x2={205 + outer * Math.cos(a)}
+              y2={165 + outer * Math.sin(a)}
+            />
+          )
+        })}
+      </g>
+      {/* faint medallion ring */}
+      <circle cx="205" cy="165" r="140" fill="none" stroke="#c9a227" strokeWidth="1.5" opacity="0.4" />
+
       {/* filmstrip ribbon — right tail first (behind the head) */}
+      {/* dark perforation dashes peek out from under the gold band at both edges */}
+      <path
+        d="M292 96 C 346 118, 368 176, 348 230 C 332 272, 288 288, 248 272"
+        fill="none"
+        stroke="#6b5415"
+        strokeWidth="42"
+        strokeLinecap="round"
+        strokeDasharray="4 9"
+        opacity="0.9"
+      />
       <path
         d="M292 96 C 346 118, 368 176, 348 230 C 332 272, 288 288, 248 272"
         fill="none"
         stroke="url(#gold)"
-        strokeWidth="40"
+        strokeWidth="34"
+        strokeLinecap="round"
+      />
+      <path
+        d="M292 96 C 346 118, 368 176, 348 230 C 332 272, 288 288, 248 272"
+        fill="none"
+        stroke="url(#shimmer)"
+        strokeWidth="34"
         strokeLinecap="round"
       />
       {/* left sweep rising into the face */}
       <path
         d="M30 306 C 66 230, 118 176, 196 148"
         fill="none"
+        stroke="#6b5415"
+        strokeWidth="42"
+        strokeLinecap="round"
+        strokeDasharray="4 9"
+        opacity="0.9"
+      />
+      <path
+        d="M30 306 C 66 230, 118 176, 196 148"
+        fill="none"
         stroke="url(#gold)"
-        strokeWidth="40"
+        strokeWidth="34"
+        strokeLinecap="round"
+      />
+      <path
+        d="M30 306 C 66 230, 118 176, 196 148"
+        fill="none"
+        stroke="url(#shimmer)"
+        strokeWidth="34"
         strokeLinecap="round"
       />
 
@@ -97,6 +164,9 @@ function GoldenFace() {
       />
       {/* cheek + jaw shading */}
       <path d="M196 170 q10 22 26 26 q-4 8 -14 6 q-10 -10 -12 -32" fill="#b8952e" opacity="0.5" />
+      {/* sculpted highlights: forehead sheen + crown sheen only, kept soft */}
+      <path d="M186 78 q-14 14 -17 34 q8 -4 12 -12 q4 -12 5 -22" fill="#fff3c4" opacity="0.4" />
+      <path d="M244 72 q18 12 24 36 q-8 -4 -14 -14 q-6 -12 -10 -22" fill="#fff3c4" opacity="0.3" />
       {/* serene closed eye + brow */}
       <path d="M176 112 q12 -7 24 -1" fill="none" stroke="#8a6d1d" strokeWidth="3" strokeLinecap="round" />
       <path d="M180 124 q10 6 19 1" fill="none" stroke="#6b5415" strokeWidth="3" strokeLinecap="round" />
@@ -175,6 +245,40 @@ function GoldenFace() {
           <path d="M0 -7 L0 7 M-6.1 -3.5 L6.1 3.5 M-6.1 3.5 L6.1 -3.5" />
         </g>
       </FilmFrame>
+      <FilmFrame x={36} y={300} rotate={-46} title="The mammoth sends regards">
+        <rect x="-17" y="-10" width="34" height="21" fill="#2a3444" />
+        <path d="M-14 8 h28 M-12 8 q-2 -10 6 -13 q10 -4 14 4 q3 5 2 9 M-10 8 v-4 M-4 8 v-5 M4 8 v-5 M8 8 v-4" stroke="#c9b08a" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+        <path d="M-12 -2 q-5 2 -4 8" stroke="#e8d9b0" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+        <circle cx="4" cy="-3" r="0.9" fill="#e8d9b0" />
+      </FilmFrame>
+      <FilmFrame x={318} y={112} rotate={64} title="The dance">
+        <rect x="-17" y="-10" width="34" height="21" fill="#2a1a2e" />
+        <g fill="#f0dcc8">
+          <circle cx="-1" cy="-6" r="2.2" />
+          <path d="M-2.5 -4 q-3 4 -1 8 l3 0 q2 -4 1 -8 Z" />
+          <path d="M-3 4 q-5 3 -8 1 M0 4 q3 4 7 4" stroke="#f0dcc8" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+          <path d="M-3.5 -2 q-5 -2 -8 -6 M-0.5 -2.5 q4 -3 5 -7" stroke="#f0dcc8" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          <path d="M-5 2 q4 3 8 0 q-1 4 -4 4 q-3 0 -4 -4 Z" fill="#c8687a" />
+        </g>
+      </FilmFrame>
+
+      {/* sparkles */}
+      {(
+        [
+          [96, 120, 0],
+          [330, 60, 0.8],
+          [368, 120, 1.6],
+          [60, 200, 2.4],
+          [236, 36, 1.2],
+          [352, 290, 2.0],
+        ] as const
+      ).map(([sx, sy, delay]) => (
+        <g key={`${sx}-${sy}`} transform={`translate(${sx} ${sy})`} fill="#fff8dc">
+          <path d="M0 -7 Q1.3 -1.3 7 0 Q1.3 1.3 0 7 Q-1.3 1.3 -7 0 Q-1.3 -1.3 0 -7 Z">
+            <animate attributeName="opacity" values="0.15;1;0.15" dur="3.2s" begin={`${delay}s`} repeatCount="indefinite" />
+          </path>
+        </g>
+      ))}
     </svg>
   )
 }
