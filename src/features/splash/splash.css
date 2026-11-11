@@ -75,35 +75,14 @@
   0%,
   100% {
     text-shadow:
-      0 0 4px rgba(255, 244, 196, 0.3),
+      0 0 5px rgba(255, 244, 196, 0.35),
       0 2px 0 rgba(0, 0, 0, 0.35);
   }
   50% {
     text-shadow:
-      0 0 7px rgba(255, 248, 220, 0.55),
-      0 0 14px rgba(240, 196, 92, 0.22),
+      0 0 9px rgba(255, 248, 220, 0.65),
+      0 0 18px rgba(240, 196, 92, 0.3),
       0 2px 0 rgba(0, 0, 0, 0.35);
-  }
-}
-/* little fan of radiance off the top-right of the numerals */
-.e-splash-rays {
-  position: absolute;
-  top: -0.3em;
-  right: -0.52em;
-  width: 0.5em;
-  height: 0.5em;
-  overflow: visible;
-  animation: e-twinkle 3.6s ease-in-out infinite;
-}
-@keyframes e-twinkle {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scale(0.94);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 .e-splash-title small {
