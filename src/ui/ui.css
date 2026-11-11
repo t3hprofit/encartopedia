@@ -16,9 +16,17 @@
   color: #c8c8c8;
   white-space: nowrap;
   overflow: hidden;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+}
+.e-titlebar-name:hover {
+  color: #f0ecd8;
 }
 /* direct children only — dialogs mount inside the title bar's DOM */
-.e-titlebar > button {
+.e-titlebar > button:not(.e-titlebar-name) {
   width: 22px;
   height: 18px;
   margin-left: 3px;
@@ -30,7 +38,7 @@
   cursor: pointer;
   font-family: var(--font-ui);
 }
-.e-titlebar > button:hover {
+.e-titlebar > button:not(.e-titlebar-name):hover {
   background: #333;
 }
 .e-titlebar > .e-info {
