@@ -17,7 +17,8 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.e-titlebar button {
+/* direct children only — dialogs mount inside the title bar's DOM */
+.e-titlebar > button {
   width: 22px;
   height: 18px;
   margin-left: 3px;
@@ -29,10 +30,10 @@
   cursor: pointer;
   font-family: var(--font-ui);
 }
-.e-titlebar button:hover {
+.e-titlebar > button:hover {
   background: #333;
 }
-.e-titlebar .e-info {
+.e-titlebar > .e-info {
   border-color: var(--e-info-blue);
   color: #9db9e8;
   font-family: var(--font-serif);
